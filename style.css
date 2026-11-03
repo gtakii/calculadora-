@@ -1,0 +1,295 @@
+
+:root {
+    --bg-main: #f4f4f5;
+    --bg-card: #ffffff;
+    --bg-display: #fafafa;
+    --border-color: #e4e4e7;
+    --text-primary: #09090b;
+    --text-secondary: #71717a;
+    --btn-num-bg: #f4f4f5;
+    --btn-num-hover: #e4e4e7;
+    --btn-op-bg: #e4e4e7;
+    --btn-op-hover: #d4d4d8;
+    --btn-action-bg: #18181b;
+    --btn-action-text: #ffffff;
+    --btn-action-hover: #27272a;
+    --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] {
+    --bg-main: #09090b;
+    --bg-card: #18181b;
+    --bg-display: #09090b;
+    --border-color: #27272a;
+    --text-primary: #fafafa;
+    --text-secondary: #a1a1aa;
+    --btn-num-bg: #27272a;
+    --btn-num-hover: #3f3f46;
+    --btn-op-bg: #3f3f46;
+    --btn-op-hover: #52525b;
+    --btn-action-bg: #fafafa;
+    --btn-action-text: #09090b;
+    --btn-action-hover: #e4e4e7;
+    --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    user-select: none;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.calculator {
+    width: 100%;
+    max-width: 360px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Top Bar */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.btn-history-toggle {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 8px;
+}
+
+.btn-history-toggle:hover {
+    color: var(--text-primary);
+    background-color: var(--btn-num-bg);
+}
+
+.theme-switcher {
+    display: flex;
+    background-color: var(--bg-main);
+    padding: 3px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.theme-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.theme-btn.active {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* History Panel */
+.history-panel {
+    max-height: 0;
+    overflow: hidden;
+    background-color: var(--bg-display);
+    border-bottom: 0px solid var(--border-color);
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.history-panel.open {
+    max-height: 180px;
+    padding: 0.8rem 1.25rem;
+    border-bottom-width: 1px;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.history-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+}
+
+.btn-clear-history {
+    background: none;
+    border: none;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.btn-clear-history:hover {
+    color: var(--text-primary);
+}
+
+.history-list {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    max-height: 130px;
+}
+
+.history-list::-webkit-scrollbar {
+    width: 3px;
+}
+
+.history-list::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 3px;
+}
+
+.history-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 0.3rem 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.history-item:hover {
+    background-color: var(--btn-num-bg);
+}
+
+.history-expr {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.history-res {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.history-empty {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin: auto 0;
+    font-style: italic;
+}
+
+/* Display */
+.display {
+    padding: 1.5rem 1.25rem 1rem 1.25rem;
+    background-color: var(--bg-display);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    min-height: 110px;
+    word-break: break-all;
+}
+
+.expression {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    min-height: 1.2rem;
+    margin-bottom: 0.25rem;
+}
+
+.current-value {
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text-primary);
+}
+
+/* Keypad */
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.6rem;
+    padding: 1.25rem;
+}
+
+button.btn {
+    border: none;
+    outline: none;
+    padding: 1rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button.btn:active {
+    transform: scale(0.95);
+}
+
+.btn-num {
+    background-color: var(--btn-num-bg);
+    color: var(--text-primary);
+}
+
+.btn-num:hover {
+    background-color: var(--btn-num-hover);
+}
+
+.btn-op {
+    background-color: var(--btn-op-bg);
+    color: var(--text-primary);
+    font-size: 1.25rem;
+}
+
+.btn-op:hover {
+    background-color: var(--btn-op-hover);
+}
+
+.btn-action {
+    background-color: var(--btn-action-bg);
+    color: var(--btn-action-text);
+    font-size: 1.25rem;
+    grid-row: span 2;
+}
+
+.btn-action:hover {
+    background-color: var(--btn-action-hover);
+}
+
+.col-span-2 {
+    grid-column: span 2;
+}
